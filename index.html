@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Boyfriend's Day! ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body>
+
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="main-wrapper">
+        <header>
+            <h1>Happy Boyfriend's Day! ❤️</h1>
+            <p>A little digital surprise made just for you.</p>
+        </header>
+
+        <section class="card-container">
+            <h2>Reasons You're the Best Boyfriend:</h2>
+            <div class="reason-box" id="reasonBox">
+                Click the button below to see why I love you!
+            </div>
+            <!-- The click triggers the function below -->
+            <button class="next-btn" onclick="nextReason()">Tap for a Reason ✨</button>
+        </section>
+
+        <section class="envelope-container">
+            <div class="envelope" id="envelope" onclick="openLetter()">
+                <div class="heart-icon">❤️</div>
+                <div class="envelope-title" id="envelopeTitle">You have a hidden love letter!</div>
+                <p style="color: #888; font-size: 0.9rem;">(Click to open)</p>
+            </div>
+            
+            <div class="letter-content" id="letterContent">
+                <p>Dear Tenzing,</p>
+                <p>Happy Boyfriend's Day! I wanted to build something unique to remind you how much you mean to me.</p>
+                <p class="letter-signature">Forever & always, <br>Your Polii</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Embedding JavaScript directly so it never gets lost -->
+    <script>
+        const reasons = [
+            "How you always know exactly how to make me smile. 😊",
+            "Your warm, comforting hugs that make all my stress melt away. 🫂",
+            "The way you fiercely support my goals and passions. 🚀",
+            "Your beautiful heart and the kindness you show to everyone. ✨",
+            "Simply because being around you makes everything better. ❤️"
+        ];
+
+        let currentReasonIndex = -1;
+
+        function nextReason() {
+            const reasonBox = document.getElementById('reasonBox');
+            currentReasonIndex = (currentReasonIndex + 1) % reasons.length;
+            
+            reasonBox.style.opacity = 0;
+            setTimeout(() => {
+                reasonBox.textContent = reasons[currentReasonIndex];
+                reasonBox.style.opacity = 1;
+            }, 150);
+        }
+
+        function openLetter() {
+            const letter = document.getElementById('letterContent');
+            const envelopeTitle = document.getElementById('envelopeTitle');
+            
+            if (letter.style.display === 'none' || letter.style.display === '') {
+                letter.style.display = 'block';
+                envelopeTitle.textContent = "Open Letter";
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff4d6d', '#ff85a2', '#ffb3c1']
+                });
+            } else {
+                letter.style.display = 'none';
+                envelopeTitle.textContent = "You have a hidden love letter!";
+            }
+        }
+
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartSymbols = ['❤️', '💖', '💝', '💕'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+                const duration = Math.random() * 3 + 4;
+                heart.style.animationDuration = duration + 's';
+                container.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, duration * 1000);
+            }, 600);
+        }
+
+        createFloatingHearts();
+    </script>
+</body>
+</html>
